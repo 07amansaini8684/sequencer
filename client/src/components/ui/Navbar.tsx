@@ -1,13 +1,21 @@
+import { useAutomationStore } from '@/store/useAutomationStore';
 import { UserButton } from '@clerk/clerk-react';
 import React from 'react';
 
-const Navbar = ({ onSave }: { onSave: () => void }) => {
+const Navbar = () => {
     const navLinks = [
         { name: "Dashboard", path: "#" },
         { name: "Sequences", path: "#" },
         { name: "Templates", path: "#" },
         { name: "Settings", path: "#" }
     ];
+
+    const {finalData, sendDataToBackend} = useAutomationStore();
+    const handleSaveAndExecute =() =>{
+        console.log("the Execute button was clicked")
+        console.log("Final Data:", finalData);
+        sendDataToBackend();
+    }
 
     return (
         <div className='w-full'>
@@ -35,7 +43,7 @@ const Navbar = ({ onSave }: { onSave: () => void }) => {
                 {/* Right side - Save button and avatar */}
                 <div className="flex items-center space-x-3">
                     <button
-                        onClick={onSave}
+                        onClick={() => handleSaveAndExecute()}
                         className="relative px-6 group py-2 text-sm font-semibold border-[1px] border-zinc-700 rounded-full overflow-hidden transition-all duration-300 cursor-pointer"
                     >
                         <span className="relative z-10">Save</span>

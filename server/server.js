@@ -5,6 +5,7 @@ import { clerkMiddleware } from '@clerk/express'
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
+import automationData from "./routes/automationData.js"
 dotenv.config();
 
 // Initialize Express app
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 // Basic API Route
 app.use("/api/users", userRoutes);
 app.use("/api/auth/", authRoutes);
+app.use("/api/automation", automationData )
 
 // Start Server
 const PORT = process.env.PORT || 5000;

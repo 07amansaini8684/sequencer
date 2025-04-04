@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+import axios from "axios"; 
 // Attachments type
 export interface Attachment {
   name: string;
@@ -55,6 +55,7 @@ interface AutomationStore {
 
   // final data (should auto update)
   finalData: FinalData;
+  sendDataToBackend: () => Promise<void>;
 }
 
 export const useAutomationStore = create<AutomationStore>((set, get) => {
@@ -94,8 +95,20 @@ export const useAutomationStore = create<AutomationStore>((set, get) => {
     set({ finalData: updatedData });
   };
 
+  const sendDataToBackend = async () => {
+    try {
+      const finalData = get().finalData; // Get the final data from store
+
+      const response = await axios.post("http://localhost:6060/api/automation/automationData", finalData);
+      
+      console.log("Data sent successfully:", response.data);
+    } catch (error) {
+      console.error("Error sending data:", error);
+    }
+  };
+
   // initial state
-  const initialState: Omit<AutomationStore, "finalData"> = {
+  const initialState: Omit<AutomationStore, "finalData" | "sendDataToBackend"> = {
     selectedLeads: [],
     setSelectedLeads: (leads) => {
       set({ selectedLeads: leads });
@@ -170,5 +183,6 @@ export const useAutomationStore = create<AutomationStore>((set, get) => {
         timePeriod: "AM",
       },
     },
+    sendDataToBackend,
   };
 });
