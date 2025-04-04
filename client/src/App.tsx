@@ -1,45 +1,19 @@
-import React from 'react';
-import Navbar from './components/ui/Navbar';
-import Sidebar from './components/ui/Sidebar';
-import NodeEditor from './components/workflow/NodeEditor';
- 
-import useStore from './store/useStore';
-import FlowCanvas from './workflow/workflow';
-import { ChartNetwork } from 'lucide-react';
+import { Route, Routes } from "react-router-dom"
+import Home from "./pages/Home"
+import AuthCallback from "./pages/AuthCallback"
+import { AuthenticateWithRedirectCallback } from "@clerk/clerk-react"
 
-function App() {
-  const { nodes, edges } = useStore();
 
-  const handleSaveSequence = () => {
-    const sequence = {
-      nodes,
-      edges,
-    };
-    console.log('Saving sequence:', sequence);
-    alert('Sequence saved! Check console for details.');
-  };
-
+const App = () => {
   return (
-    <div className="flex flex-col h-screen bg-[#EDF2F8] py-4 px-6">
-      <Navbar onSave={handleSaveSequence} />
-      <div className="flex flex-1 py-4 overflow-hidden gap-5">
-        <Sidebar />
-        <div className="flex-1 flex flex-col min-w-0">
-          <div className="p-6 ">
-            <div className="flex items-center">
-              <h1 className="text-3xl font-semibold text-gray-900">Email Sequence Builder</h1>
-              <div className="ml-4 flex items-center gap-2">
-                <span><ChartNetwork /></span>
-                <span className="text-md font-semibold text-gray-500">Nodes</span>
-              </div>
-            </div>
-          </div>
-          <FlowCanvas />
-        </div>
-        <NodeEditor />
-      </div>
-    </div>
-  );
+    <>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/sso-callback" element={<AuthenticateWithRedirectCallback  signUpForceRedirectUrl="/auth-callback" />} />
+      <Route path="/auth-callback" element={<AuthCallback />} />
+    </Routes>
+    </>
+  )
 }
 
-export default App;
+export default App

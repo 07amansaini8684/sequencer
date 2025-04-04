@@ -1,6 +1,6 @@
 import { Router } from "express";
-import User from "../model/User";
-import { authCallback } from "../controllers/authController";
+
+import { authCallback } from "../controllers/authController.js";
 
 const router = Router();
 

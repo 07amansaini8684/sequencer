@@ -1,5 +1,7 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useState } from 'react';
 import { Search, List, Filter, Mail, Database } from 'lucide-react';
+import { useAutomationStore } from '@/store/useAutomationStore';
 
 const mockLists = [
   'SalesBlink LTD Dec 2024',
@@ -47,15 +49,30 @@ export default function SourceSidebar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLists, setSelectedLists] = useState<string[]>([]);
 
+  const { setSelectedLeads, selectedLeads } = useAutomationStore()
+  // just checking if the selectedLeads is being updated
+  // setSelectedLeads(selectedLists);
+  // useEffect(() => {
+  //   console.log('Selected Leads:', selectedLeads);
+
+  // },[])
   const filteredLists = mockLists.filter(list =>
     list.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // one of most effecient way would be to directly update the store
+  // we can use useEffect to update the store when selectedLists changes
   const handleCheckboxChange = (list: string) => {
-    setSelectedLists(prev =>
-      prev.includes(list) ? prev.filter(l => l !== list) : [...prev, list]
-    );
+    setSelectedLists(prev => {
+      const updatedLists = prev.includes(list)
+        ? prev.filter(l => l !== list)
+        : [...prev, list];
+
+      setSelectedLeads(updatedLists); // Update store immediately
+      return updatedLists;
+    });
   };
+
 
   const toggleBlock = (blockId: string) => {
     setExpandedBlock(prev => (prev === blockId ? null : blockId));

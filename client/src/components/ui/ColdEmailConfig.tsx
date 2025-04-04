@@ -1,5 +1,13 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState, useRef, useEffect } from 'react';
 import { Mail, CheckCircle, Hourglass, Filter, GitBranch, Paperclip } from 'lucide-react';
+import { Attachment, useAutomationStore } from '@/store/useAutomationStore';
+
+interface File {
+  name: string;
+  size: number;
+  type: string;
+}
 
 const EmailWorkflowSidebar = () => {
   const [activeBlock, setActiveBlock] = useState<string | null>(null);
@@ -11,6 +19,19 @@ const EmailWorkflowSidebar = () => {
   });
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const {setLanguage, language, setOfferType, offerType, setSubject, subject, setMessage, message,addAttachment, attachments} = useAutomationStore()
+
+
+  // alright check everthing is working fine!! can see the data in the console
+  // useEffect(() =>{
+  //   // consoling all the data from the store
+  //   console.log('Offer Type:', offerType);
+  //   console.log('Subject:', subject);
+  //   console.log('Message:', message);
+  //   console.log('Language:', language);
+  //   console.log('Attachments:', attachments);
+
+  // },[])
   
   const blocks = [
     {
@@ -79,7 +100,21 @@ const EmailWorkflowSidebar = () => {
   const handleSave = () => {
     console.log('Form Data:', formData);
     console.log('Attached Files:', files);
-    // Here you could add additional logic to process the form and files
+    // setting the data into the store
+    setLanguage(formData.language)
+    setOfferType(formData.businessOffer)
+    setSubject(formData.subjectLine)
+    setMessage(formData.message)
+    // Reset form data and fils after saving
+    // putting one by one the data into the store...
+    addAttachment(
+      files.map(file => ({
+        name: file.name,
+        size: file.size,
+        type: file.type.startsWith('image/') ? 'image' : file.type.startsWith('video/') ? 'video' : 'image'
+      }))
+    )
+
   };
 
   const handleFileClick = () => {

@@ -6,6 +6,7 @@ import { Calendar } from 'lucide-react';
 import SourceSidebar from '../ui/SourceSidebar';
 import ColdEmailConfig from '../ui/ColdEmailConfig';
 import EmailWorkflowSidebar from '../ui/ColdEmailConfig';
+import WaitDelayComponent from '../ui/WaitDelayComponent';
 
 // Define TypeScript interfaces
 interface NodeData {
@@ -30,10 +31,10 @@ interface Node {
 const NodeEditor: React.FC = () => {
   const selectedNode = useStore((state) => state.selectedNode) as Node | null;
   const updateNode = useStore((state) => state.updateNode) as (id: string, data: NodeData) => void;
-  
+
   // Local state to ensure input values are properly displayed
   const [localData, setLocalData] = useState<NodeData>({});
-  
+
   // Update local state when selected node changes
   useEffect(() => {
     if (selectedNode && selectedNode.data) {
@@ -60,10 +61,10 @@ const NodeEditor: React.FC = () => {
       ...localData,
       [field]: value
     });
-    
+
     // Then update the global state
     updateNode(selectedNode.id, { [field]: value });
-    
+
     // Log data changes to console
     console.log(`Updated ${field}:`, value);
     console.log('Current node data:', { ...localData, [field]: value });
@@ -121,75 +122,21 @@ const NodeEditor: React.FC = () => {
     switch (selectedNode.type) {
       case 'emailNode':
         return (
-        <EmailWorkflowSidebar />
+          <EmailWorkflowSidebar />
         );
-        
+
       case 'delayNode':
         return (
-          <div className="space-y-4 p-4">
-            <h3 className="text-base font-medium text-gray-700">Wait/Delay</h3>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Your Final Time
-              </label>
-              <input
-                type="text"
-                value={localData.finalTime || ''}
-                onChange={(e) => handleChange('finalTime', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Set final time"
-                style={{ color: 'black' }}
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Delay Date
-              </label>
-              <div className="mb-1">
-                <input
-                  type="date"
-                  value={localData.delayDate || ''}
-                  onChange={(e) => handleChange('delayDate', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  style={{ color: 'black' }}
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-600 mb-1">
-                Delay Time
-              </label>
-              <input
-                type="time"
-                value={localData.delayTime || ''}
-                onChange={(e) => handleChange('delayTime', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                style={{ color: 'black' }}
-              />
-            </div>
-            
-            <div className="pt-4">
-              <button 
-                onClick={handleSave}
-                className="w-full py-2 px-4 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors">
-                Save
-              </button>
-            </div>
-            
-            {renderPreview()}
-          </div>
+         <WaitDelayComponent/>
         );
-        
+
       case 'sourceNode':
         return (
           <div>
-            <SourceSidebar/>
+            <SourceSidebar />
           </div>
         );
-        
+
       default:
         return null;
     }

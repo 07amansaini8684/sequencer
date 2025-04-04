@@ -1,3 +1,4 @@
+import { UserButton } from '@clerk/clerk-react';
 import React from 'react';
 
 const Navbar = ({ onSave }: { onSave: () => void }) => {
@@ -38,11 +39,12 @@ const Navbar = ({ onSave }: { onSave: () => void }) => {
                         className="relative px-6 group py-2 text-sm font-semibold border-[1px] border-zinc-700 rounded-full overflow-hidden transition-all duration-300 cursor-pointer"
                     >
                         <span className="relative z-10">Save</span>
-                      
+
                     </button>
-                    <div className="w-8 h-8 bg-blue-500 rounded-full overflow-hidden">
-                        <img src="https://i.pinimg.com/736x/59/00/c8/5900c89da6ec955868e55a727c680db2.jpg"
-                            alt="User avatar" className="w-full h-full object-cover" />
+                    <div>
+                        {/* <img src="https://i.pinimg.com/736x/59/00/c8/5900c89da6ec955868e55a727c680db2.jpg"
+                            alt="User avatar" className="w-full h-full object-cover" /> */}
+                        <UserButton />
                     </div>
                 </div>
 
