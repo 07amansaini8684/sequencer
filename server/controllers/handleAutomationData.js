@@ -50,6 +50,7 @@ export const handleAutomationData = async (req, res) => {
 
     await automation.save();
 
+    // gonna change the time after all the testing is done
     // 🗓 Schedule the job via Agenda
     await agenda.schedule("in 1 minute", "log-automation-data", {
       clerkId,

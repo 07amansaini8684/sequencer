@@ -7,6 +7,7 @@ import SourceSidebar from '../ui/SourceSidebar';
 import ColdEmailConfig from '../ui/ColdEmailConfig';
 import EmailWorkflowSidebar from '../ui/ColdEmailConfig';
 import WaitDelayComponent from '../ui/WaitDelayComponent';
+import { useAutomationStore } from '@/store/useAutomationStore';
 
 // Define TypeScript interfaces
 interface NodeData {
@@ -34,6 +35,24 @@ const NodeEditor: React.FC = () => {
 
   // Local state to ensure input values are properly displayed
   const [localData, setLocalData] = useState<NodeData>({});
+  // const selectedLeads = useAutomationStore((state) => state.selectedLeads);
+  // useEffect(() => {
+  //   if (selectedNode && selectedNode.data) {
+  //     setLocalData(selectedNode.data);
+  
+  //     if (selectedNode.type === 'sourceNode') {
+  //       requestAnimationFrame(() => {
+  //         updateNode(selectedNode.id, {
+  //           ...selectedNode.data,
+  //           leads: selectedLeads,
+  //         });
+  //       });
+  //     }
+  //   }
+  // }, [selectedNode, selectedLeads]);
+  
+  
+
 
   // Update local state when selected node changes
   useEffect(() => {

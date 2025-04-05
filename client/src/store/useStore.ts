@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { create } from 'zustand';
 import { Node, Edge, MarkerType } from '@xyflow/react';
 
