@@ -6,6 +6,8 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
 import automationData from "./routes/automationData.js"
+import defineSendEmailJob, { defineAutomationJob }  from "./jobs/sendEmailJob.js";
+import agenda from "./config/agenda.js";
 dotenv.config();
 
 // Initialize Express app
@@ -16,9 +18,27 @@ app.use(express.json());
 app.use(clerkMiddleware())
 // Middleware
 
+const startApp = async () => {
+  await connectDB(); // Ensure DB is connected
 
-// Connect to MongoDB
-connectDB();
+  defineSendEmailJob(agenda); // Register job definition
+  defineAutomationJob(agenda); // Register job definition
+  await agenda.start(); // Start Agenda
+  console.log("🚀 Agenda started and ready");
+
+  // // 🧪 Test: Schedule an email job in 2 minutes
+  await agenda.schedule("in 2 minutes", "send-email", { 
+    email: "test@example.com",
+    subject: "Test Email",
+    message: "Hello! This is a test email.",
+    language: "en",
+    attachments: [],
+  });
+
+  // console.log("📅 Email job scheduled in 2 minutes");
+};
+
+startApp();
 
 app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));

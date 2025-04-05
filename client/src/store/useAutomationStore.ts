@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import axios from "axios"; 
+import axios from "axios";
+
 // Attachments type
 export interface Attachment {
   name: string;
@@ -9,6 +10,7 @@ export interface Attachment {
 
 // Final data structure
 interface FinalData {
+  clerkId: string;
   leads: string[];
   email: {
     offerType: string;
@@ -28,6 +30,10 @@ interface FinalData {
 
 // Combined Zustand Store
 interface AutomationStore {
+  // clerk id of the user
+  clerkId: string;
+  setClerkId: (id: string) => void;
+
   // lead selection
   selectedLeads: string[];
   setSelectedLeads: (leads: string[]) => void;
@@ -53,7 +59,7 @@ interface AutomationStore {
   timePeriod: "AM" | "PM";
   setDelay: (date: string, time: string, period: "AM" | "PM") => void;
 
-  // final data (should auto update)
+  // final data (auto-updated)
   finalData: FinalData;
   sendDataToBackend: () => Promise<void>;
 }
@@ -61,6 +67,7 @@ interface AutomationStore {
 export const useAutomationStore = create<AutomationStore>((set, get) => {
   const updateFinalData = () => {
     const {
+      clerkId,
       selectedLeads,
       offerType,
       subject,
@@ -75,13 +82,14 @@ export const useAutomationStore = create<AutomationStore>((set, get) => {
     } = get();
 
     const updatedData: FinalData = {
+      clerkId,
       leads: selectedLeads,
       email: {
-        offerType,
-        subject,
-        message,
-        language,
-        attachments,
+        offerType: offerType || "",
+        subject: subject || "",
+        message: message || "",
+        language: language || "English",
+        attachments: attachments || [],
       },
       delay: {
         finalTime,
@@ -97,18 +105,24 @@ export const useAutomationStore = create<AutomationStore>((set, get) => {
 
   const sendDataToBackend = async () => {
     try {
-      const finalData = get().finalData; // Get the final data from store
+      updateFinalData(); // make sure the latest data is captured
+      const finalData = get().finalData;
 
       const response = await axios.post("http://localhost:6060/api/automation/automationData", finalData);
-      
-      console.log("Data sent successfully:", response.data);
+      console.log("✅ Data sent successfully:", response.data);
     } catch (error) {
-      console.error("Error sending data:", error);
+      console.error("❌ Error sending data:", error);
     }
   };
 
-  // initial state
-  const initialState: Omit<AutomationStore, "finalData" | "sendDataToBackend"> = {
+  return {
+    // Initial state
+    clerkId: "",
+    setClerkId: (id) => {
+      set({ clerkId: id });
+      updateFinalData();
+    },
+
     selectedLeads: [],
     setSelectedLeads: (leads) => {
       set({ selectedLeads: leads });
@@ -136,7 +150,6 @@ export const useAutomationStore = create<AutomationStore>((set, get) => {
       set({ language: val });
       updateFinalData();
     },
-
     addAttachment: (files) => {
       const prev = get().attachments;
       set({ attachments: [...prev, ...files] });
@@ -162,11 +175,9 @@ export const useAutomationStore = create<AutomationStore>((set, get) => {
       });
       updateFinalData();
     },
-  };
 
-  return {
-    ...initialState,
     finalData: {
+      clerkId: "",
       leads: [],
       email: {
         offerType: "",

@@ -1,4 +1,5 @@
 import { useAutomationStore } from '@/store/useAutomationStore';
+import { useAuth } from '@clerk/clerk-react';
 import React, { useEffect, useState } from 'react';
 
 interface DelayState {
@@ -28,11 +29,13 @@ const WaitDelayComponent = () => {
       [field]: value
     }));
   };
-
-  const {setDelay, finalData} = useAutomationStore()
+  const { userId } = useAuth()
+  const { setDelay, finalData, clerkId, setClerkId } = useAutomationStore()
   useEffect(() => {
     // just console log the finalData when it changes
     console.log('Final Data:', finalData);
+    console.log('Clerk ID:', clerkId);
+    console.log('User ID:', userId);
   }, []);
 
   const handleSave = () => {
@@ -44,12 +47,18 @@ const WaitDelayComponent = () => {
     const timePeriod = formattedTime.slice(-2) as 'AM' | 'PM';
     console.log('Time period:', timePeriod);
     setDelay(localData.delayDate, localData.delayTime, timePeriod);
+    setClerkId(userId ?? '')
+    setLocalData({
+      finalTime: '',
+      delayDate: '',
+      delayTime: '',
+    });
   };
 
   const renderPreview = () => {
     const hasDelay = localData.delayDate && localData.delayTime;
     const formattedTime = formatTimeWithAMPm(localData.delayTime);
-    const formattedDateTime = hasDelay 
+    const formattedDateTime = hasDelay
       ? `${localData.delayDate} at ${formattedTime}`
       : null;
 

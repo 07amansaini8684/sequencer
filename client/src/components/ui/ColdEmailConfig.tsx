@@ -115,6 +115,14 @@ const EmailWorkflowSidebar = () => {
       }))
     )
 
+    setFormData({
+      businessOffer: '',
+      language: 'English',
+      subjectLine: '',
+      message: ''
+    });
+    setFiles([]);
+
   };
 
   const handleFileClick = () => {
