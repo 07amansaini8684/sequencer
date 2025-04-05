@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useAutomationStore } from '@/store/useAutomationStore';
 import { UserButton } from '@clerk/clerk-react';
 import React from 'react';
 import {
@@ -9,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogClose
 } from "@/components/ui/dialog";
 import AutomationSummary from "@/components/ui/AutomationSummary";
 

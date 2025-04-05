@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useAutomationStore } from '@/store/useAutomationStore';
 import { useAuth } from '@clerk/clerk-react';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface DelayState {
   finalTime: string;
@@ -31,7 +31,7 @@ const WaitDelayComponent = () => {
     }));
   };
   const { userId } = useAuth()
-  const { setDelay, finalData, clerkId, setClerkId } = useAutomationStore()
+  const { setDelay,  setClerkId } = useAutomationStore()
   // useEffect(() => {
   //   // just console log the finalData when it changes
   //   console.log('Final Data:', finalData);

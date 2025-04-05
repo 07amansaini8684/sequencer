@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Mail, CheckCircle, Hourglass, Filter, GitBranch, Paperclip } from 'lucide-react';
-import { Attachment, useAutomationStore } from '@/store/useAutomationStore';
+import { useAutomationStore } from '@/store/useAutomationStore';
 
 interface File {
   name: string;
@@ -19,7 +19,7 @@ const EmailWorkflowSidebar = () => {
   });
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const {setLanguage, language, setOfferType, offerType, setSubject, subject, setMessage, message,addAttachment, attachments} = useAutomationStore()
+  const {setLanguage, setOfferType, setSubject, setMessage,addAttachment} = useAutomationStore()
 
 
   // alright check everthing is working fine!! can see the data in the console

@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import {
-  type Container,
   type ISourceOptions,
 } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
@@ -18,9 +17,9 @@ const ParticlesBackground = () => {
     });
   }, []);
 
-  const particlesLoaded = async (container?: Container): Promise<void> => {
-    // console.log(container);
-  };
+  // const particlesLoaded = async (container?: Container): Promise<void> => {
+  //   // console.log(container);
+  // };
 
   const options: ISourceOptions = useMemo(
     () => ({
@@ -92,7 +91,7 @@ const ParticlesBackground = () => {
       <Particles
         id="tsparticles"
         className="w-full h-full absolute top-0 left-0 z-0"
-        particlesLoaded={particlesLoaded}
+        // particlesLoaded={particlesLoaded}
         options={options}
       />
     );

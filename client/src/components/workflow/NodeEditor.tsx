@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react';
+
+import React from 'react';
 import useStore from '../../store/useStore';
-import { Calendar } from 'lucide-react';
 import SourceSidebar from '../ui/SourceSidebar';
-import ColdEmailConfig from '../ui/ColdEmailConfig';
 import EmailWorkflowSidebar from '../ui/ColdEmailConfig';
 import WaitDelayComponent from '../ui/WaitDelayComponent';
-import { useAutomationStore } from '@/store/useAutomationStore';
+ 
 
 // Define TypeScript interfaces
 interface NodeData {
@@ -31,10 +28,10 @@ interface Node {
 
 const NodeEditor: React.FC = () => {
   const selectedNode = useStore((state) => state.selectedNode) as Node | null;
-  const updateNode = useStore((state) => state.updateNode) as (id: string, data: NodeData) => void;
+  // const updateNode = useStore((state) => state.updateNode) as (id: string, data: NodeData) => void;
 
-  // Local state to ensure input values are properly displayed
-  const [localData, setLocalData] = useState<NodeData>({});
+  // // Local state to ensure input values are properly displayed
+  // const [localData, setLocalData] = useState<NodeData>({});
   // const selectedLeads = useAutomationStore((state) => state.selectedLeads);
   // useEffect(() => {
   //   if (selectedNode && selectedNode.data) {
@@ -55,13 +52,13 @@ const NodeEditor: React.FC = () => {
 
 
   // Update local state when selected node changes
-  useEffect(() => {
-    if (selectedNode && selectedNode.data) {
-      setLocalData(selectedNode.data);
-    } else {
-      setLocalData({});
-    }
-  }, [selectedNode]);
+  // useEffect(() => {
+  //   if (selectedNode && selectedNode.data) {
+  //     setLocalData(selectedNode.data);
+  //   } else {
+  //     setLocalData({});
+  //   }
+  // }, [selectedNode]);
 
   if (!selectedNode) {
     return (
@@ -74,68 +71,49 @@ const NodeEditor: React.FC = () => {
     );
   }
 
-  const handleChange = (field: string, value: any) => {
-    // Update local state first for immediate feedback
-    setLocalData({
-      ...localData,
-      [field]: value
-    });
 
-    // Then update the global state
-    updateNode(selectedNode.id, { [field]: value });
-
-    // Log data changes to console
-    // console.log(`Updated ${field}:`, value);
-    // console.log('Current node data:', { ...localData, [field]: value });
-  };
-
-  const handleSave = () => {
-    // Update the global state with all local changes
-    updateNode(selectedNode.id, localData);
-    // console.log(`Saved ${selectedNode.type}:`, localData);
-  };
 
   // Create a preview of the node's final message
-  const renderPreview = () => {
-    switch (selectedNode.type) {
-      case 'emailNode':
-        return (
-          <div className="mt-6 border-t pt-4 space-y-2 overfhlo">
-            <h4 className="text-sm font-semibold text-gray-700">Message Preview</h4>
-            <div className="bg-gray-50 p-3 rounded-md text-sm">
-              <div className="font-medium">From: {localData.sender || 'Not set'}</div>
-              <div className="font-medium">Subject: {localData.subject || 'Not set'}</div>
-              <div className="mt-2 border-t pt-2 text-gray-600 whitespace-pre-line">
-                {localData.body || 'No content'}
-              </div>
-            </div>
-          </div>
-        );
-      case 'delayNode':
-        return (
-          <div className="mt-6 border-t pt-4 space-y-2">
-            <h4 className="text-sm font-semibold text-gray-700">Delay Details</h4>
-            <div className="bg-gray-50 p-3 rounded-md text-sm">
-              <div><span className="font-medium">Final Time:</span> {localData.finalTime || 'Not set'}</div>
-              <div><span className="font-medium">Wait Until:</span> {localData.delayDate || 'Date not set'} at {localData.delayTime || 'Time not set'}</div>
-            </div>
-          </div>
-        );
-      case 'sourceNode':
-        return (
-          <div className="mt-6 border-t pt-4 space-y-2">
-            <h4 className="text-sm font-semibold text-gray-700">Source Details</h4>
-            <div className="bg-gray-50 p-3 rounded-md text-sm">
-              <div><span className="font-medium">Source:</span> {localData.source || 'All Leads'}</div>
-              <div><span className="font-medium">List:</span> {localData.listName || 'Not specified'}</div>
-              <div><span className="font-medium">Lead Count:</span> {localData.leadCount || '0'}</div>
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
+  // const renderPreview = () => {
+  //   switch (selectedNode.type) {
+  //     case 'emailNode':
+  //       return (
+  //         <div className="mt-6 border-t pt-4 space-y-2 overfhlo">
+  //           <h4 className="text-sm font-semibold text-gray-700">Message Preview</h4>
+  //           <div className="bg-gray-50 p-3 rounded-md text-sm">
+  //             <div className="font-medium">From: {localData.sender || 'Not set'}</div>
+  //             <div className="font-medium">Subject: {localData.subject || 'Not set'}</div>
+  //             <div className="mt-2 border-t pt-2 text-gray-600 whitespace-pre-line">
+  //               {localData.body || 'No content'}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       );
+  //     case 'delayNode':
+  //       return (
+  //         <div className="mt-6 border-t pt-4 space-y-2">
+  //           <h4 className="text-sm font-semibold text-gray-700">Delay Details</h4>
+  //           <div className="bg-gray-50 p-3 rounded-md text-sm">
+  //             <div><span className="font-medium">Final Time:</span> {localData.finalTime || 'Not set'}</div>
+  //             <div><span className="font-medium">Wait Until:</span> {localData.delayDate || 'Date not set'} at {localData.delayTime || 'Time not set'}</div>
+  //           </div>
+  //         </div>
+  //       );
+  //     case 'sourceNode':
+  //       return (
+  //         <div className="mt-6 border-t pt-4 space-y-2">
+  //           <h4 className="text-sm font-semibold text-gray-700">Source Details</h4>
+  //           <div className="bg-gray-50 p-3 rounded-md text-sm">
+  //             <div><span className="font-medium">Source:</span> {localData.source || 'All Leads'}</div>
+  //             <div><span className="font-medium">List:</span> {localData.listName || 'Not specified'}</div>
+  //             <div><span className="font-medium">Lead Count:</span> {localData.leadCount || '0'}</div>
+  //           </div>
+  //         </div>
+  //       );
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   const renderEditor = () => {
     switch (selectedNode.type) {

@@ -53,7 +53,7 @@ export const DelayNode = ({ data, id }: { data: any; id: string }) => {
       className={`bg-white rounded-lg shadow-lg p-4 border ${isSelected ? 'border-blue-500' : 'border-gray-200'
         } w-48 cursor-pointer`}
       onClick={() =>
-        setSelectedNode({ id, type: 'delayNode' } as any)
+        setSelectedNode({ id,data, type: 'delayNode' } as any)
       }
     >
       <Handle type="target" position={Position.Top} />

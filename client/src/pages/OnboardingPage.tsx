@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import SignInOAuthButtons from '@/components/SignInOAuthButtons'
-import { SignedOut, SignedIn,SignOutButton } from '@clerk/clerk-react'
-import React from 'react'
+import { SignedOut} from '@clerk/clerk-react'
 
 const OnboardingPage = () => {
     return (

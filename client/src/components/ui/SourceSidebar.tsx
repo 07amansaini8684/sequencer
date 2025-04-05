@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Search, List, Filter, Mail, Database } from 'lucide-react';
 import { useAutomationStore } from '@/store/useAutomationStore';
 
