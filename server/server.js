@@ -26,7 +26,7 @@ const startApp = async () => {
   // defineSendEmailJob(agenda); // Register job definition
   defineAutomationJob(agenda); // Register job definition
   await agenda.start(); // Start Agenda
-  console.log("🚀 Agenda started and ready");
+  // console.log("🚀 Agenda started and ready");
 
   // // 🧪 Test: Schedule an email job in 2 minutes
   // await agenda.schedule("in 2 minutes", "send-email", { 

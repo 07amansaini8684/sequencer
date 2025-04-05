@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useAutomationStore } from '@/store/useAutomationStore';
 import { useAuth } from '@clerk/clerk-react';
 import React, { useEffect, useState } from 'react';
@@ -31,21 +32,21 @@ const WaitDelayComponent = () => {
   };
   const { userId } = useAuth()
   const { setDelay, finalData, clerkId, setClerkId } = useAutomationStore()
-  useEffect(() => {
-    // just console log the finalData when it changes
-    console.log('Final Data:', finalData);
-    console.log('Clerk ID:', clerkId);
-    console.log('User ID:', userId);
-  }, []);
+  // useEffect(() => {
+  //   // just console log the finalData when it changes
+  //   console.log('Final Data:', finalData);
+  //   console.log('Clerk ID:', clerkId);
+  //   console.log('User ID:', userId);
+  // }, []);
 
   const handleSave = () => {
     const formattedTime = formatTimeWithAMPm(localData.delayTime);
-    console.log('Saved data:', {
-      ...localData,
-      formattedTimeWithPeriod: formattedTime,
-    });
+    // console.log('Saved data:', {
+    //   ...localData,
+    //   formattedTimeWithPeriod: formattedTime,
+    // });
     const timePeriod = formattedTime.slice(-2) as 'AM' | 'PM';
-    console.log('Time period:', timePeriod);
+    // console.log('Time period:', timePeriod);
     setDelay(localData.delayDate, localData.delayTime, timePeriod);
     setClerkId(userId ?? '')
     setLocalData({

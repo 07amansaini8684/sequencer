@@ -85,14 +85,14 @@ const NodeEditor: React.FC = () => {
     updateNode(selectedNode.id, { [field]: value });
 
     // Log data changes to console
-    console.log(`Updated ${field}:`, value);
-    console.log('Current node data:', { ...localData, [field]: value });
+    // console.log(`Updated ${field}:`, value);
+    // console.log('Current node data:', { ...localData, [field]: value });
   };
 
   const handleSave = () => {
     // Update the global state with all local changes
     updateNode(selectedNode.id, localData);
-    console.log(`Saved ${selectedNode.type}:`, localData);
+    // console.log(`Saved ${selectedNode.type}:`, localData);
   };
 
   // Create a preview of the node's final message

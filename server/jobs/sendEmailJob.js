@@ -4,11 +4,11 @@ const defineSendEmailJob = (agenda) => {
   agenda.define("send-email", async (job) => {
     const { email, subject, message, language, attachments } = job.attrs.data;
 
-    console.log("📩 Sending email to:", email);
-    console.log("📜 Subject:", subject);
-    console.log("💬 Message:", message);
-    console.log("🌍 Language:", language);
-    console.log("📎 Attachments:", attachments);
+    // console.log("📩 Sending email to:", email);
+    // console.log("📜 Subject:", subject);
+    // console.log("💬 Message:", message);
+    // console.log("🌍 Language:", language);
+    // console.log("📎 Attachments:", attachments);
     // Here you would integrate with your email service provider
     try {
       // sendTestEmail();
@@ -81,13 +81,13 @@ export const defineAutomationJob = (agenda) => {
      * ----------------------------------------------
      */
     // shutting down all the console cuz now everthing is working fine
-    console.log("📧 Email Details:");
-    console.log("From1:", `${senderName} <${senderEmail}>`);
-    console.log("To2:", targetEmails.join(", "));
-    console.log("Subject:", email.subject);
-    console.log("Message:", email.message);
-    console.log("Language:", email.language);
-    console.log("Attachments:", email.attachments?.length || 0);
+    // console.log("📧 Email Details:");
+    // console.log("From1:", `${senderName} <${senderEmail}>`);
+    // console.log("To2:", targetEmails.join(", "));
+    // console.log("Subject:", email.subject);
+    // console.log("Message:", email.message);
+    // console.log("Language:", email.language);
+    // console.log("Attachments:", email.attachments?.length || 0);
 
     /**
      * ----------------------------------------------
@@ -105,7 +105,7 @@ export const defineAutomationJob = (agenda) => {
       html: email.message,
       attachments: email.attachments || [],
     });
-    console.log(`✅ Email successfully sent to: ${targetEmails.join(", ")}`);
+    // console.log(`✅ Email successfully sent to: ${targetEmails.join(", ")}`);
 
     /**
      * ----------------------------------------------

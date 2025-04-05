@@ -98,8 +98,8 @@ const EmailWorkflowSidebar = () => {
   };
 
   const handleSave = () => {
-    console.log('Form Data:', formData);
-    console.log('Attached Files:', files);
+    // console.log('Form Data:', formData);
+    // console.log('Attached Files:', files);
     // setting the data into the store
     setLanguage(formData.language)
     setOfferType(formData.businessOffer)
@@ -135,7 +135,7 @@ const EmailWorkflowSidebar = () => {
     if (e.target.files && e.target.files.length > 0) {
       const newFiles = Array.from(e.target.files);
       setFiles(prev => [...prev, ...newFiles]);
-      console.log('Files selected:', newFiles);
+      // console.log('Files selected:', newFiles);
     }
   };
 

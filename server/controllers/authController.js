@@ -2,7 +2,7 @@ import User from "../model/User.js";
 export const authCallback = async (req, res) => {
     try {
       const {id, firstName, lastName, email, imageUrl} = req.body;
-      console.log("Callback data:", req.body);
+      // console.log("Callback data:", req.body);
   
       // check if user already exists
       const user = await User.findOne({ clerkId: id });
