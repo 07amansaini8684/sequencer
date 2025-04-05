@@ -1,0 +1,21 @@
+{
+  "name": "emailsequencer",
+  "version": "1.0.0",
+  "description": "🧩 Visual Email Automation Flow Builder A no-code drag-and-drop tool to automate email sequences using visual flowcharts, complete with scheduling and multi-lead support.",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
+    "start": "npm start --prefix server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/07amansaini8684/sequencer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/07amansaini8684/sequencer/issues"
+  },
+  "homepage": "https://github.com/07amansaini8684/sequencer#readme"
+}

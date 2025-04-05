@@ -12,7 +12,10 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(express.json());
 // Pass no parameters
 app.use(clerkMiddleware())
@@ -50,6 +53,14 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use("/api/users", userRoutes);
 app.use("/api/auth/", authRoutes);
 app.use("/api/automation", automationData )
+
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static(path.join(__dirname, "../client/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client", "dist", "index.html"));
+  }
+  );
+}
 
 // Start Server
 const PORT = process.env.PORT || 5000;
