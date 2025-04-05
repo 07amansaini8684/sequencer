@@ -6,7 +6,7 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
-import userRoutes from "./routes/userRoutes.js";
+// import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import automationData from "./routes/automationData.js";
 import defineSendEmailJob, {
@@ -57,7 +57,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 // MongoDB Connection
 
 // Basic API Route
-app.use("/api/users", userRoutes);
+// app.use("/api/users", userRoutes);
 app.use("/api/auth/", authRoutes);
 app.use("/api/automation", automationData);
 
