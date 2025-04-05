@@ -20,11 +20,11 @@ app.use(clerkMiddleware())
 
 const startApp = async () => {
   await connectDB(); // Ensure DB is connected
-
+  // defineAutomationJob
 
   // it is just for testing puposees
   // defineSendEmailJob(agenda); // Register job definition
-  // defineAutomationJob(agenda); // Register job definition
+  defineAutomationJob(agenda); // Register job definition
   await agenda.start(); // Start Agenda
   console.log("🚀 Agenda started and ready");
 

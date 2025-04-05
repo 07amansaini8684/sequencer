@@ -61,12 +61,12 @@ export const handleAutomationData = async (req, res) => {
     let delayDateTimeStr = `${delayDate}T${delayTime}:00`;
     let delayDateTime = new Date(delayDateTimeStr);
 
-    // console.log(
-    //   "Scheduled job for:",
-    //   isNaN(delayDateTime.getTime()) || delayDateTime <= new Date()
-    //     ? "in 1 minute"
-    //     : delayDateTime.toString()
-    // );
+    console.log(
+      "Scheduled job for:",
+      isNaN(delayDateTime.getTime()) || delayDateTime <= new Date()
+        ? "in 1 minute"
+        : delayDateTime.toString()
+    );
 
     // If date is invalid or not in the future, fallback to "in 1 minute"
     if (isNaN(delayDateTime.getTime()) || delayDateTime <= new Date()) {
@@ -90,16 +90,18 @@ export const handleAutomationData = async (req, res) => {
       });
     }
 
-    // gonna change the time after all the testing is done
-    // 🗓 Schedule the job via Agenda
-    await agenda.schedule("in 1 minute", "log-automation-data", {
-      clerkId,
-      leads,
-      email,
-      delay,
-    });
+   
 
-    console.log("🕐 Job scheduled to log automation data in 1 minute");
+    // // gonna change the time after all the testing is done
+    // // 🗓 Schedule the job via Agenda
+    // await agenda.schedule("in 1 minute", "log-automation-data", {
+    //   clerkId,
+    //   leads,
+    //   email,
+    //   delay,
+    // });
+
+    console.log("🕐 Email scheduled to log automation data ");
 
     // ✅ Respond with success
     res.status(200).json({ message: "Automation data stored successfully." });
