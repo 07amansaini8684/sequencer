@@ -119,3 +119,101 @@
     }
 }
   
+
+
+
+
+@keyframes gradientBorder {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+
+
+@layer utilities {
+  /* Act as a border */
+  .card-wrapper {
+    @apply relative overflow-hidden rounded-2xl bg-gradient-to-b from-zinc-100 to-slate-800;
+    /*width: 400px; !* Set a specific width *!*/
+    /*height: 300px; !* Set a specific height *!*/
+  }
+
+  /* Gradient */
+  .card-wrapper::before {
+    background: conic-gradient(
+            rgba(255, 189, 122, 0.6) 0deg,
+            rgba(254, 139, 187, 0.8) 0deg,
+            transparent 80deg
+    );
+
+    @apply absolute left-[-50%] top-[-50%] h-[200%] w-[200%] content-[''];
+    animation: border-spin 6s linear infinite; /* Apply the animation */
+  }
+
+  /* Body */
+  .card-content {
+    @apply absolute left-[1px] top-[1px] h-[calc(100%-2px)] w-[calc(100%-2px)] rounded-2xl;
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 189, 122, 0.4), /* Replaced with #ffbd7a */
+            rgba(254, 139, 187, 0.4)  /* Replaced with #fe8bbb */
+    );
+  }
+  .gradient-border {
+    position: relative; /* Ensure parent is positioned */
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(35deg, #ffbd7a 95%, #fe8bbb 100%);
+    display: block; /* Ensures it takes full space */
+
+    -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+}
+/*#ffbd7a*/
+/*#fe8bbb*/
+@keyframes border-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*  desiging the horizontal bar */
+::-webkit-scrollbar{
+  display: none;
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(35deg, #191919 95%, #d2c8cd 100%);
+  border-radius: 10px;
+  box-shadow: inset 2px 2px 2px rgba(185, 185, 185, 0.8),
+}
+
+::-moz-selection { /* Code for Firefox */
+    background: linear-gradient(35deg, #191919 95%, #d2c8cd 100%);
+}
+
+::selection {
+    background: linear-gradient(35deg, #191919 95%, #d2c8cd 100%);
+}
