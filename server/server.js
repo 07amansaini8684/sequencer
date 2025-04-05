@@ -1,27 +1,31 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { clerkMiddleware } from '@clerk/express'
+import { clerkMiddleware } from "@clerk/express";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
-import authRoutes from "./routes/authRoutes.js"
-import automationData from "./routes/automationData.js"
-import defineSendEmailJob, { defineAutomationJob }  from "./jobs/sendEmailJob.js";
+import authRoutes from "./routes/authRoutes.js";
+import automationData from "./routes/automationData.js";
+import defineSendEmailJob, {
+  defineAutomationJob,
+} from "./jobs/sendEmailJob.js";
 import agenda from "./config/agenda.js";
 dotenv.config();
 
 // Initialize Express app
 const app = express();
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 // Pass no parameters
-app.use(clerkMiddleware())
+app.use(clerkMiddleware());
 // Middleware
 
 const startApp = async () => {
@@ -35,7 +39,7 @@ const startApp = async () => {
   // console.log("🚀 Agenda started and ready");
 
   // // 🧪 Test: Schedule an email job in 2 minutes
-  // await agenda.schedule("in 2 minutes", "send-email", { 
+  // await agenda.schedule("in 2 minutes", "send-email", {
   //   email: "test@example.com",
   //   subject: "Test Email",
   //   message: "Hello! This is a test email.",
@@ -55,17 +59,17 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 // Basic API Route
 app.use("/api/users", userRoutes);
 app.use("/api/auth/", authRoutes);
-app.use("/api/automation", automationData )
+app.use("/api/automation", automationData);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-if(process.env.NODE_ENV === "production"){
+if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client", "dist", "index.html"));
-  }
-  );
+    // Fixed route syntax and parameter
+    res.sendFile(path.resolve(__dirname, "../client/dist/index.html")); // Simplified path
+  });
 }
 
 // Start Server
