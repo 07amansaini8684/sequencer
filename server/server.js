@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { clerkMiddleware } from '@clerk/express'
 import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js"
@@ -54,6 +56,9 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use("/api/users", userRoutes);
 app.use("/api/auth/", authRoutes);
 app.use("/api/automation", automationData )
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 if(process.env.NODE_ENV === "production"){
   app.use(express.static(path.join(__dirname, "../client/dist")));
