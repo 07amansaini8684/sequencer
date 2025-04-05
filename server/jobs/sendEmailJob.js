@@ -80,13 +80,14 @@ export const defineAutomationJob = (agenda) => {
      * 📨 EMAIL BODY LOGGING (For Debugging)
      * ----------------------------------------------
      */
-    console.log("📧 Email Details:");
-    console.log("From1:", `${senderName} <${senderEmail}>`);
-    console.log("To2:", targetEmails.join(", "));
-    console.log("Subject:", email.subject);
-    console.log("Message:", email.message);
-    console.log("Language:", email.language);
-    console.log("Attachments:", email.attachments?.length || 0);
+    // shutting down all the console cuz now everthing is working fine
+    // console.log("📧 Email Details:");
+    // console.log("From1:", `${senderName} <${senderEmail}>`);
+    // console.log("To2:", targetEmails.join(", "));
+    // console.log("Subject:", email.subject);
+    // console.log("Message:", email.message);
+    // console.log("Language:", email.language);
+    // console.log("Attachments:", email.attachments?.length || 0);
 
     /**
      * ----------------------------------------------

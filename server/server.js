@@ -21,19 +21,21 @@ app.use(clerkMiddleware())
 const startApp = async () => {
   await connectDB(); // Ensure DB is connected
 
-  defineSendEmailJob(agenda); // Register job definition
-  defineAutomationJob(agenda); // Register job definition
+
+  // it is just for testing puposees
+  // defineSendEmailJob(agenda); // Register job definition
+  // defineAutomationJob(agenda); // Register job definition
   await agenda.start(); // Start Agenda
   console.log("🚀 Agenda started and ready");
 
   // // 🧪 Test: Schedule an email job in 2 minutes
-  await agenda.schedule("in 2 minutes", "send-email", { 
-    email: "test@example.com",
-    subject: "Test Email",
-    message: "Hello! This is a test email.",
-    language: "en",
-    attachments: [],
-  });
+  // await agenda.schedule("in 2 minutes", "send-email", { 
+  //   email: "test@example.com",
+  //   subject: "Test Email",
+  //   message: "Hello! This is a test email.",
+  //   language: "en",
+  //   attachments: [],
+  // });
 
   // console.log("📅 Email job scheduled in 2 minutes");
 };

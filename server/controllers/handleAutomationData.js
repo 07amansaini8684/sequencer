@@ -14,7 +14,9 @@ export const handleAutomationData = async (req, res) => {
     // 👥 Validate leads array
     if (!Array.isArray(leads) || leads.length === 0) {
       console.error("❌ Leads field is empty or invalid:", leads);
-      return res.status(400).json({ error: "Leads field is empty or invalid." });
+      return res
+        .status(400)
+        .json({ error: "Leads field is empty or invalid." });
     }
 
     // 📧 Validate email object (only check main structure)
@@ -25,7 +27,9 @@ export const handleAutomationData = async (req, res) => {
       !Array.isArray(email.attachments)
     ) {
       console.error("❌ Email field is missing or invalid:", email);
-      return res.status(400).json({ error: "Email field is missing or invalid." });
+      return res
+        .status(400)
+        .json({ error: "Email field is missing or invalid." });
     }
 
     // 🕐 Validate delay object
@@ -37,7 +41,9 @@ export const handleAutomationData = async (req, res) => {
       !delay.delayTime
     ) {
       console.error("❌ Delay field is missing or invalid:", delay);
-      return res.status(400).json({ error: "Delay field is missing or invalid." });
+      return res
+        .status(400)
+        .json({ error: "Delay field is missing or invalid." });
     }
 
     // ✅ Save to MongoDB
@@ -49,6 +55,40 @@ export const handleAutomationData = async (req, res) => {
     });
 
     await automation.save();
+
+    const { delayDate, delayTime } = delay;
+
+    let delayDateTimeStr = `${delayDate}T${delayTime}:00`;
+    let delayDateTime = new Date(delayDateTimeStr);
+
+    // console.log(
+    //   "Scheduled job for:",
+    //   isNaN(delayDateTime.getTime()) || delayDateTime <= new Date()
+    //     ? "in 1 minute"
+    //     : delayDateTime.toString()
+    // );
+
+    // If date is invalid or not in the future, fallback to "in 1 minute"
+    if (isNaN(delayDateTime.getTime()) || delayDateTime <= new Date()) {
+      console.warn(
+        "Given time is invalid or not in the future. Defaulting to 'in 1 minute'."
+      );
+
+      await agenda.schedule("in 1 minute", "log-automation-data", {
+        clerkId,
+        leads,
+        email,
+        delay,
+      });
+    } else {
+      // Time is valid and in the future
+      await agenda.schedule(delayDateTime, "log-automation-data", {
+        clerkId,
+        leads,
+        email,
+        delay,
+      });
+    }
 
     // gonna change the time after all the testing is done
     // 🗓 Schedule the job via Agenda
@@ -63,7 +103,7 @@ export const handleAutomationData = async (req, res) => {
 
     // ✅ Respond with success
     res.status(200).json({ message: "Automation data stored successfully." });
-    console.log("✅ Automation data stored successfully:", automation);
+    // console.log("✅ Automation data stored successfully:", automation);
   } catch (error) {
     console.error("💥 Error processing automation data:", error);
     res.status(500).json({ error: "Internal Server Error" });

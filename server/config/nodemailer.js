@@ -31,9 +31,9 @@ export const sendScheduledEmail = async ({
   console.log("📧 Sending email...");
 
   const emailList = Array.isArray(recipients) ? recipients : [];
-  console.log("To:", emailList);
-  console.log("From:", `${fromName} <${fromEmail}>`);
-  console.log("Subject:", subject);
+  // console.log("To:", emailList);
+  // console.log("From:", `${fromName} <${fromEmail}>`);
+  // console.log("Subject:", subject);
 
   if (emailList.length === 0) {
     console.error("❌ No recipients provided.");

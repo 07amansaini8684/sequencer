@@ -77,7 +77,7 @@ export const SourceNode = ({ data, id }: { data: any; id: string }) => {
   const selectedNode = useStore((state) => state.selectedNode);
   const isSelected = selectedNode?.id === id;
 
-  console.log('Source Node Data:', data);
+  // console.log('Source Node Data:', data);
   // here instead of use the data i will use the store cuz it is global now!! keeping it simple and staright forword
 
   const { selectedLeads } = useAutomationStore()
