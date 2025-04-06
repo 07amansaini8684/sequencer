@@ -1,5 +1,6 @@
 import { create } from "zustand";
-import axios from "axios";
+// import axios from "axios";
+import { axiosInstance } from "@/lib/axios";
 
 // Attachments type
 export interface Attachment {
@@ -103,12 +104,14 @@ export const useAutomationStore = create<AutomationStore>((set, get) => {
     set({ finalData: updatedData });
   };
 
+
+  // 
   const sendDataToBackend = async () => {
     try {
       updateFinalData(); // make sure the latest data is captured
       const finalData = get().finalData;
 
-      const response = await axios.post("http://localhost:6060/api/automation/automationData", finalData);
+      const response = await axiosInstance.post('/automation/automationData', finalData);
       console.log("✅ Data sent successfully:", response.data);
     } catch (error) {
       console.error("❌ Error sending data:", error);

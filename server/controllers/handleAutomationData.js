@@ -105,7 +105,7 @@ export const handleAutomationData = async (req, res) => {
 
     // ✅ Respond with success
     res.status(200).json({ message: "Automation data stored successfully." });
-    // console.log("✅ Automation data stored successfully:", automation);
+    console.log("✅ Automation data stored successfully:", automation);
   } catch (error) {
     console.error("💥 Error processing automation data:", error);
     res.status(500).json({ error: "Internal Server Error" });
